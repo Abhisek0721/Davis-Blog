@@ -7,7 +7,7 @@
     <div class="mx-10 my-10 lg:mx-72 lg:my-20">
         <div id="header-content" class="flex flex-col justify-center lg:flex-row lg:justify-between">
             <div class="w-[90%] lg:w-[50%]">
-                <h1 class="text-4xl font-bold text-center lg:text-left">Welcome {% if name %} {{name}} {% else %}to <span class="text-indigo-700">Davis Blog</span>{% endif %}</h1>
+                <h1 class="text-4xl font-bold text-center lg:text-left">Welcome {% if user.is_authenticated %} {{request.user.first_name}} {{request.user.last_name}} {% else %}to <span class="text-indigo-700">Davis Blog</span>{% endif %}</h1>
                 <p class="mt-5 text-lg font-semibold text-slate-500 text-justify">
                     Are you looking for coding blog website? If Yes, then you are in the right place.
                     This is the plateform, where you will learn new technologies 
