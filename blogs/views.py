@@ -1,18 +1,36 @@
 from django.shortcuts import render, redirect
 from django.core.signing import Signer #for encrypting the password
 import json
-from .models import Account
+from .models import Account, Contact
+
 
 signer = Signer(salt='extra') # for encription of password
 
 # Create your views here.
 def home(request):
-    return render(request, 'index.html')
+    if ('auth' in request.session):
+        data = {
+                "auth" : request.session["auth"],
+                "username": request.session["username"], 
+                "name" : request.session["fname"]+" "+request.session["lname"],
+                "email" : request.session["email"]
+            }
+        return render(request, 'index.html', data)
+    else:
+        return render(request, 'index.html')
 
 def about(request):
     return render(request, 'about.html')
 
 def contact(request):
+    if (request.method == 'POST'):
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        email = request.POST.get('email')
+        msg = request.POST.get("msg")
+        contact = Contact.objects.create(firstName= fname, lastName= lname, email=email, message=msg)
+        contact.save()
+        return redirect('/')
     return render(request, 'contact.html')
 
 def blog(request):
@@ -28,6 +46,11 @@ def login(request):
             dictPassword = json.loads(jsonPassword) #loads() converts json into python dictionary
             if(password==dictPassword['password']):
                 # Login Successful
+                request.session['auth'] = True
+                request.session['username'] = username
+                request.session["fname"] = check_user.firstName
+                request.session['lname'] = check_user.lastName
+                request.session["email"] = check_user.email
                 return redirect('/')
             else:
                 # Wrong Password
@@ -53,4 +76,14 @@ def signup(request):
             User.save()
             return redirect('/login')
     return render(request, "signup.html")
+
+def logout(request):
+    request.session.pop('auth')
+    request.session.pop('username')
+    request.session.pop("fname")
+    request.session.pop('lname')
+    request.session.pop("email")
+    return redirect('/login')
+
+
 

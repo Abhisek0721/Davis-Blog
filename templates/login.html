@@ -25,11 +25,11 @@
                 {% csrf_token %}
                 <div class="flex py-2 bg-white rounded-md justify-center lg:w-[46%] w-[90%] mx-auto">
                     <span><i class="fa-solid fa-user mx-auto px-2 py-1 text-lg"></i></span>
-                    <span><input type="text" name="username" id="username" placeholder="username" class="text-lg px-5 w-[95%] py-1 text-slate-600 outline-none rounded-md border-2 border-slate-200"></span>
+                    <span><input type="text" name="username" id="username" placeholder="username" class="text-lg px-5 w-[95%] py-1 text-slate-600 outline-none rounded-md border-2 border-slate-200" required /></span>
                 </div>
                 <div class="flex py-2 mt-2 bg-white rounded-md justify-center lg:w-[46%] w-[90%] mx-auto">
                     <span><i class="fa-solid fa-key mx-auto px-2 py-1 text-lg"></i></span>
-                    <span><input type="password" name="password" id="password" placeholder="password" class="text-lg px-5 w-[95%] py-1 text-slate-600 outline-none rounded-md border-2 border-slate-200"></span>
+                    <span><input type="password" name="password" id="password" placeholder="password" class="text-lg px-5 w-[95%] py-1 text-slate-600 outline-none rounded-md border-2 border-slate-200" required /></span>
                 </div>
                 <div class="flex justify-center mt-3">
                     <button type="submit" class="px-5 py-1 text-lg font-semibold bg-blue-600 text-white hover:bg-gray-900 rounded-md">Log in</button>

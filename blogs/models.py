@@ -14,3 +14,12 @@ class Account(models.Model):
 
     def __str__(self):
         return self.username
+
+class Contact(models.Model):
+    firstName = models.CharField(max_length=30)
+    lastName = models.CharField(max_length=30)
+    email = models.EmailField()
+    message = models.TextField()
+
+    def __str__(self):
+        return self.email
