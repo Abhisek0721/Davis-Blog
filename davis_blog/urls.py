@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from blogs import views
+from django.conf.urls.static import static
+from davis_blog import settings
 
 admin.site.site_header = "Davis Blog"
 admin.site.site_title =  "Davis Blog"
@@ -16,6 +18,8 @@ urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path("see-contacts/", views.display_contact, name="display_contact"),
     path("create-blog/", views.create_blog, name="create_blog"),
+    path("view-blog/", views.view_blog, name="view_blog"),
     path("logout/", views.logout, name="logout"),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

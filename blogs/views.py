@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .models import Contact, Blogs
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -23,7 +26,8 @@ def contact(request):
     return render(request, 'contact.html')
 
 def blog(request):
-    return render(request, "blog.html")
+    blogs = Blogs.objects.all()
+    return render(request, "blog.html",{'blogs':blogs})
 
 def login(request):
     if (request.method == "POST"):
@@ -68,7 +72,7 @@ def create_blog(request):
             lastName = request.user.last_name
             email = request.user.email
             title = request.POST.get('title')
-            image = request.POST.get('img')
+            image = request.FILES.get('img')
             content = request.POST.get("content")
             blog = Blogs.objects.create(username=username, firstName=firstName, lastName=lastName, email=email, title=title, image=image, content=content)
             blog.save()
@@ -77,6 +81,21 @@ def create_blog(request):
     else:
         print(request.user)
         return redirect('/')
+
+@csrf_exempt
+def view_blog(request):
+    if request.method == 'POST':
+        blogId = json.load(request)['blogId']
+        fetchBlog = Blogs.objects.filter(id=blogId).first()
+        print(fetchBlog.title)
+        data = {
+            'title': str(fetchBlog.title),
+            'username': str(fetchBlog.username),
+            'img-name': str(fetchBlog.image),
+            'content': str(fetchBlog.content)
+        }
+        return JsonResponse(data)
+    return redirect('/blog')
 
 def logout(request):
     auth_logout(request)

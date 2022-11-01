@@ -21,3 +21,6 @@ class Blogs(models.Model):
     image = models.ImageField()
     content = models.TextField()
     datetime = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.title
