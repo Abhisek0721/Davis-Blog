@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from .models import Contact
+from .models import Contact, Blogs
 
 
 # Create your views here.
@@ -55,6 +55,28 @@ def signup(request):
             create_account.save()
             return redirect('/login')
     return render(request, "signup.html")
+
+def display_contact(request):
+    contact_list = Contact.objects.all()
+    return render(request, 'displayContact.html', {"contacts":contact_list})
+
+def create_blog(request):
+    if request.user.username:
+        if request.method == "POST":
+            username = request.user.username
+            firstName = request.user.first_name
+            lastName = request.user.last_name
+            email = request.user.email
+            title = request.POST.get('title')
+            image = request.POST.get('img')
+            content = request.POST.get("content")
+            blog = Blogs.objects.create(username=username, firstName=firstName, lastName=lastName, email=email, title=title, image=image, content=content)
+            blog.save()
+            return redirect('/')
+        return render(request, "createBlog.html")
+    else:
+        print(request.user)
+        return redirect('/')
 
 def logout(request):
     auth_logout(request)

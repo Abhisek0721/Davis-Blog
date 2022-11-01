@@ -11,9 +11,11 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
     path("contact/", views.contact, name="contact"),
-    path("blog", views.blog, name="blog"),
+    path("blog/", views.blog, name="blog"),
     path("login/", views.login, name="login"),
     path("signup/", views.signup, name="signup"),
+    path("see-contacts/", views.display_contact, name="display_contact"),
+    path("create-blog/", views.create_blog, name="create_blog"),
     path("logout/", views.logout, name="logout"),
 ]
 
