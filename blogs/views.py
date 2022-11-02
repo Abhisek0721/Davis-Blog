@@ -61,8 +61,11 @@ def signup(request):
     return render(request, "signup.html")
 
 def display_contact(request):
-    contact_list = Contact.objects.all()
-    return render(request, 'displayContact.html', {"contacts":contact_list})
+    if request.user.is_superuser:
+        contact_list = Contact.objects.all()
+        return render(request, 'displayContact.html', {"contacts":contact_list})
+    else:
+        return redirect('/')
 
 def create_blog(request):
     if request.user.username:
