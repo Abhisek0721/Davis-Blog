@@ -85,19 +85,19 @@ def create_blog(request):
         print(request.user)
         return redirect('/')
 
-@csrf_exempt
+# @csrf_exempt
 def view_blog(request):
     if request.method == 'POST':
-        blogId = json.load(request)['blogId']
+        # blogId = json.load(request)['blogId']
+        blogId = request.POST.get('blogId')
         fetchBlog = Blogs.objects.filter(id=blogId).first()
-        print(fetchBlog.title)
-        data = {
-            'title': str(fetchBlog.title),
-            'username': str(fetchBlog.username),
-            'img-name': str(fetchBlog.image),
-            'content': str(fetchBlog.content)
-        }
-        return JsonResponse(data)
+        # data = {
+        #     'title': str(fetchBlog.title),
+        #     'username': str(fetchBlog.username),
+        #     'img-name': str(fetchBlog.image),
+        #     'content': str(fetchBlog.content)
+        # }
+        return render(request, 'viewBlog.html', {'blog':fetchBlog})
     return redirect('/blog')
 
 def logout(request):
