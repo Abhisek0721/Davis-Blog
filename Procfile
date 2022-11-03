@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: gunicorn davis_blog.wsgi --log-file -
