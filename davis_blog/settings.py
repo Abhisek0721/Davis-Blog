@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*","davisblog.herokuapp.com"]
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'blogs.apps.BlogsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -119,10 +121,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #Added manually
-# STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR,"statics")
-# ]
-
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR,"statics")
+]
+WHITENOISE_USE_FINDERS = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATIC_ROOT for deployment in heroku
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
