@@ -1,0 +1,1 @@
+web : gunicorn davis_blog.wsgi

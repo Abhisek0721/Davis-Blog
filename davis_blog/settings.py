@@ -119,9 +119,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #Added manually
-STATICFILES_DIRS = [
-   os.path.join(BASE_DIR,"statics")
-]
+# STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR,"statics")
+# ]
+
+# STATIC_ROOT for deployment in heroku
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, "media")
